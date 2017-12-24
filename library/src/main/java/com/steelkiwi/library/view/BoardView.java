@@ -122,6 +122,7 @@ public class BoardView extends View implements BoardCounter {
         invalidate();
     }
 
+
     @Override
     public int getCount() {
         return count;

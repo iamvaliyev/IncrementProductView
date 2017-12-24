@@ -160,6 +160,14 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
         confirmationBoardView.setOnClickListener(this);
     }
 
+    public void setCount(int count) {
+        boardChild.setCount(count);
+    }
+
+    public int getCount() {
+        return boardChild.getCount();
+    }
+
     private void initDefaultBackgroundPaint() {
         strokeWidth = getResources().getDimensionPixelSize(R.dimen.parent_stroke_size);
         defaultBackgroundPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -250,7 +258,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        if(confirmationState == ConfirmationState.CONFIRM) {
+        if (confirmationState == ConfirmationState.CONFIRM) {
             if (boardChild != null) {
                 onConfirm();
                 manageBoardViewState(false);
@@ -273,7 +281,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
         @Override
         public void onClick(View view) {
             scaleBoardView(incrementChild);
-            if(boardChild != null) {
+            if (boardChild != null) {
                 boardChild.increment();
                 onCountChange(boardChild.getCount());
             }
@@ -284,11 +292,11 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
         @Override
         public void onClick(View view) {
             scaleBoardView(decrementChild);
-            if(boardChild != null) {
+            if (boardChild != null) {
                 boardChild.decrement();
                 onCountChange(boardChild.getCount());
                 // if count is 0 close board view
-                if(boardChild.getCount() == 0) {
+                if (boardChild.getCount() == 0) {
                     confirmationState = ConfirmationState.OPEN;
                     manageBoardViewState(true);
                     onClose();
@@ -298,19 +306,19 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     };
 
     private void onCountChange(int count) {
-        if(onStateListener != null) {
+        if (onStateListener != null) {
             onStateListener.onCountChange(count);
         }
     }
 
     private void onConfirm() {
-        if(onStateListener != null) {
+        if (onStateListener != null) {
             onStateListener.onConfirm(boardChild.getCount());
         }
     }
 
     private void onClose() {
-        if(onStateListener != null) {
+        if (onStateListener != null) {
             onStateListener.onClose();
         }
     }
@@ -336,8 +344,8 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     }
 
     private void onParentClick(float cx, float cy, float radius, boolean isUpdate) {
-        if(state == ViewState.IDLE) {
-            if(isUpdate) {
+        if (state == ViewState.IDLE) {
+            if (isUpdate) {
                 // update count of products when board is open
                 onCountChange(boardChild.getCount());
             }
@@ -348,7 +356,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
             // change parent state to have ability to close expanded views
             state = ViewState.EXPAND;
         } else {
-            if(isUpdate) {
+            if (isUpdate) {
                 // update count of products when board is hide
                 onCountChange(0);
             }
@@ -426,7 +434,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     }
 
     private void drawMainIcon(final Canvas canvas) {
-        if(mainIconDrawable != null) {
+        if (mainIconDrawable != null) {
             Bitmap bitmap = convertToBitmap(mainIconDrawable, (int) (defaultRadius * 1.2f), (int) (defaultRadius * 1.2f));
             canvas.drawBitmap(bitmap, centerX - bitmap.getWidth() / 2,
                     centerY - bitmap.getHeight() / 2, defaultBackgroundPaint);
@@ -436,7 +444,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     private int reconcileSize(int contentSize, int measureSpec) {
         final int mode = MeasureSpec.getMode(measureSpec);
         final int specSize = MeasureSpec.getSize(measureSpec);
-        switch(mode) {
+        switch (mode) {
             case MeasureSpec.EXACTLY:
                 return specSize;
             case MeasureSpec.AT_MOST:
@@ -452,7 +460,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     }
 
     private Bitmap convertToBitmap(Drawable drawable, int width, int height) {
-        if(drawable != null) {
+        if (drawable != null) {
             Bitmap mutableBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(mutableBitmap);
             drawable.setBounds(0, 0, width, height);
@@ -487,7 +495,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     }
 
     public void setIncrementIcon(Drawable drawable) {
-        if(drawable != null) {
+        if (drawable != null) {
             this.incrementIcon = convertToBitmap(drawable, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         } else {
             this.incrementIcon = BitmapFactory.decodeResource(getResources(), R.drawable.plus);
@@ -499,7 +507,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     }
 
     public void setDecrementIcon(Drawable drawable) {
-        if(drawable != null) {
+        if (drawable != null) {
             this.decrementIcon = convertToBitmap(drawable, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         } else {
             this.decrementIcon = BitmapFactory.decodeResource(getResources(), R.drawable.minus);
@@ -511,7 +519,7 @@ public class IncrementProductView extends ViewGroup implements View.OnClickListe
     }
 
     public void setAddIcon(Drawable drawable) {
-        if(drawable != null) {
+        if (drawable != null) {
             this.addIcon = convertToBitmap(drawable, drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight());
         } else {
             this.addIcon = BitmapFactory.decodeResource(getResources(), R.drawable.plus);
